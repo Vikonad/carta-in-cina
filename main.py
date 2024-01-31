@@ -1,6 +1,4 @@
-import arcade, math, json
-#from PIL import Image, ImageDraw
-import tkinter as tk
+import arcade, math, json, tkinter
 
 class DrawingApp(arcade.Window):
     def __init__(self, width, height, title):
@@ -14,14 +12,12 @@ class DrawingApp(arcade.Window):
         self.penna = arcade.load_texture("penna.png")
         self.tavolo = arcade.load_texture("tavolo.jpg")
         self.ink = arcade.load_texture("ink.png")
-        self.manod = arcade.load_texture("mano_destra.png")
-        self.manos = arcade.load_texture("mano_sinistra.png")
+        self.mano_destra = arcade.load_texture("mano_destra.png")
+        self.mano_sinistra = arcade.load_texture("mano_sinistra.png")
         self.casa = arcade.load_texture("casa.jpg")
         self.home = arcade.load_texture("home.png")
-        self.hand = arcade.load_texture("hand.png")
-        #self.cmano = [self.manos,205,-55]
-        self.cmano = [self.manod,155,55]
-        self.cmano2 = [self.manos,205,-55]
+        self.cmano = [self.mano_destra,155,55]
+        self.cmano2 = [self.mano_sinistra,205,-55]
         self.drawing = False
         self.set_mouse_visible(False)
         self.pensize = 10
@@ -87,7 +83,6 @@ class DrawingApp(arcade.Window):
             print(self.home.width/15,self.home.height/15)
             if key == arcade.key.A:
                 self.window = self.game
-#pyinstaller --onefile nome_del_tuo_file.py --add-data "nome_primo_file.png;." --add-data "nome_secondo_file.png;."
     def menu(self):
         colorrect1 = arcade.color.WHITE
         colorrect2 = arcade.color.WHITE
@@ -102,7 +97,6 @@ class DrawingApp(arcade.Window):
         arcade.draw_rectangle_outline(880/2,587/2-120,350,100,colorrect2,10)
         arcade.draw_text("Inizia", 880/2-65,587/2+5, colorrect1, 40,bold=True,font_name=("courier", "arial"))
         arcade.draw_text("Chi siamo", 880/2-130,587/2-140, colorrect2, 40,bold=True,font_name=("courier", "arial"))
-        #arcade.draw_texture_rectangle(self._mouse_x+28, self._mouse_y-43, self.hand.width/9, self.hand.height/9, self.hand)
         arcade.draw_texture_rectangle(self._mouse_x+self.cmano[2], self._mouse_y+self.penna.height/2-10, self.penna.width, self.penna.height, self.penna, self.cmano[1])
 
     def game(self):
@@ -111,7 +105,7 @@ class DrawingApp(arcade.Window):
         arcade.draw_texture_rectangle(880/2, 0, self.carta.width, self.carta.height*2, self.carta,90)
         arcade.draw_texture_rectangle(60, 420, self.ink.width/5, self.ink.height/5, self.ink)
         arcade.draw_texture_rectangle(820, 420, self.home.width/5, self.home.height/5, self.home)
-        arcade.draw_texture_rectangle(70,280,self.manod.width/15,self.manod.height/15,self.cmano[0])
+        arcade.draw_texture_rectangle(70,280,self.mano_destra.width/15,self.mano_destra.height/15,self.cmano[0])
         arcade.draw_text("powered by VIKONAD", 15, 15, arcade.color.BLACK, 15,bold=True,font_name=("courier", "arial"))
 
         if self.drawing and self.pensize > 0 and 125 < self._mouse_x < 754 and self._mouse_y < 500:
@@ -128,12 +122,10 @@ class DrawingApp(arcade.Window):
             shape.draw()
 
         arcade.draw_text(f"Inchiostro: {math.ceil(self.pensize*10)}%", 125,510, arcade.color.WHITE, 10,bold=True,font_name=("courier", "arial"))
-        
-        if True: #125 < self._mouse_x < 754 and self._mouse_y < 500 or 16 < self._mouse_x < 204 and 356 < self._mouse_y < 464:
-            arcade.draw_texture_rectangle(self._mouse_x+self.cmano[2], self._mouse_y+self.penna.height/2-10, self.penna.width, self.penna.height, self.penna, self.cmano[1])
-            arcade.create_ellipse_filled(self._mouse_x, self._mouse_y, self.pensize, self.pensize, self.current_color).draw()
-        #else:
-        #    arcade.draw_texture_rectangle(self._mouse_x+28, self._mouse_y-43, self.hand.width/9, self.hand.height/9, self.hand)
+
+        arcade.draw_texture_rectangle(self._mouse_x+self.cmano[2], self._mouse_y+self.penna.height/2-10, self.penna.width, self.penna.height, self.penna, self.cmano[1])
+        arcade.create_ellipse_filled(self._mouse_x, self._mouse_y, self.pensize, self.pensize, self.current_color).draw()
+
         if self.pensize > 0:
             self.pensize -= 0.0003
         
@@ -149,9 +141,6 @@ class DrawingApp(arcade.Window):
         arcade.draw_text("Arash Momeni", 165,150, arcade.color.BLACK, 40,bold=True,font_name=("courier", "arial"))
         arcade.draw_text("powered by VIKONAD", 15, 15, arcade.color.BLACK, 15,bold=True,font_name=("courier", "arial"))
 
-        #for shape in self.database:
-        #    arcade.draw_ellipse_filled(shape[0], shape[1], shape[2], shape[2], shape[3])
-        #arcade.draw_texture_rectangle(self._mouse_x+28, self._mouse_y-43, self.hand.width/9, self.hand.height/9, self.hand)
         arcade.draw_texture_rectangle(self._mouse_x+self.cmano[2], self._mouse_y+self.penna.height/2-10, self.penna.width, self.penna.height, self.penna, self.cmano[1])
     
     def saving(self):
@@ -160,37 +149,17 @@ class DrawingApp(arcade.Window):
             with open(f"{input_text}.json", "w") as file:
                 json.dump(self.save,file,indent=4)
 
-        root = tk.Tk()
+        root = tkinter.Tk()
         root.title("salva il tuo disegno")
         root.geometry("250x80")
-        label = tk.Label(root, text="metti un nome per il tuo disegno:")
+        label = tkinter.Label(root, text="metti un nome per il tuo disegno:")
         label.pack()
-        entry = tk.Entry(root)
+        entry = tkinter.Entry(root)
         entry.pack()
-        submit_button = tk.Button(root, text="Salva", command=on_submit)
+        submit_button = tkinter.Button(root, text="Salva", command=on_submit)
         submit_button.pack()
         root.mainloop()
 
-    #def opening(self):
-#
-    #    def on_submit():
-    #        input_text = entry.get()
-    #        with open(f"assets/database/{input_text}.json") as file:
-    #            file = json.load(file)
-    #            self.shapes = []
-    #            for shape in file:
-    #                self.shapes.append(arcade.draw_ellipse_filled(shape[0],shape[1],shape[2],shape[2],shape[3]))
-#
-    #    root = tk.Tk()
-    #    root.title("apri il tuo disegno")
-    #    root.geometry("250x80")
-    #    label = tk.Label(root, text="metti il nome del disegno:")
-    #    label.pack()
-    #    entry = tk.Entry(root)
-    #    entry.pack()
-    #    submit_button = tk.Button(root, text="Apri", command=on_submit)
-    #    submit_button.pack()
-    #    root.mainloop()
 def main():
     window = DrawingApp(800, 600, "Drawing App")
     arcade.run()
