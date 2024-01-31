@@ -10,12 +10,12 @@ class DrawingApp(arcade.Window):
         self.save = []
         self.shapes = []
         self.current_color = arcade.color.BLACK
-        self.carta = arcade.load_texture("carta3.jpg")
+        self.carta = arcade.load_texture("carta.jpg")
         self.penna = arcade.load_texture("penna.png")
         self.tavolo = arcade.load_texture("tavolo.jpg")
         self.ink = arcade.load_texture("ink.png")
-        self.manod = arcade.load_texture("mano1.png")
-        self.manos = arcade.load_texture("mano2.png")
+        self.manod = arcade.load_texture("mano_destra.png")
+        self.manos = arcade.load_texture("mano_sinistra.png")
         self.casa = arcade.load_texture("casa.jpg")
         self.home = arcade.load_texture("home.png")
         self.hand = arcade.load_texture("hand.png")
