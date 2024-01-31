@@ -3,19 +3,17 @@ import arcade, math, json, tkinter
 class DrawingApp(arcade.Window):
     def __init__(self, width, height, title):
         super().__init__(title="simulatore della carta in cina",width=880,height=587)
-        with open("db.json") as file:
-            self.database = json.load(file)
         self.save = []
         self.shapes = []
         self.current_color = arcade.color.BLACK
-        self.carta = arcade.load_texture("carta.jpg")
-        self.penna = arcade.load_texture("penna.png")
-        self.tavolo = arcade.load_texture("tavolo.jpg")
-        self.ink = arcade.load_texture("ink.png")
-        self.mano_destra = arcade.load_texture("mano_destra.png")
-        self.mano_sinistra = arcade.load_texture("mano_sinistra.png")
-        self.casa = arcade.load_texture("casa.jpg")
-        self.home = arcade.load_texture("home.png")
+        self.carta = arcade.load_texture("Assets/carta.jpg")
+        self.penna = arcade.load_texture("Assets/penna.png")
+        self.tavolo = arcade.load_texture("Assets/tavolo.jpg")
+        self.ink = arcade.load_texture("Assets/ink.png")
+        self.mano_destra = arcade.load_texture("Assets/mano_destra.png")
+        self.mano_sinistra = arcade.load_texture("Assets/mano_sinistra.png")
+        self.casa = arcade.load_texture("Assets/casa.jpg")
+        self.home = arcade.load_texture("Assets/home.png")
         self.cmano = [self.mano_destra,155,55]
         self.cmano2 = [self.mano_sinistra,205,-55]
         self.drawing = False
@@ -146,7 +144,7 @@ class DrawingApp(arcade.Window):
     def saving(self):
         def on_submit():
             input_text = entry.get()
-            with open(f"{input_text}.json", "w") as file:
+            with open(f"Disegni Salvati/{input_text}.json", "w") as file:
                 json.dump(self.save,file,indent=4)
 
         root = tkinter.Tk()
