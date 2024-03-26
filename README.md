@@ -8,4 +8,4 @@ A simple simulation about writing & painting in ancient china.
 - changing hand (for left-handed people)
 - saving your paints (by pressing s)
 
-[[example.png]]
+![[example.png]]
