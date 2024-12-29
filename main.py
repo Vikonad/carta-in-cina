@@ -159,7 +159,7 @@ class DrawingApp(arcade.Window):
         root.mainloop()
 
 def main():
-    window = DrawingApp(800, 600, "Drawing App")
+    window = DrawingApp(800, 600, "DrawingApp")
     arcade.run()
 
 if __name__ == "__main__":
